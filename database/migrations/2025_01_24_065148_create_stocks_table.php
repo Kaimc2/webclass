@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->foreignId('location_id')->constrained()->cascadeOnDelete();
             $table->integer('quantity');
+            $table->enum('type', ['in', 'out']);
             $table->timestamps();
         });
     }
