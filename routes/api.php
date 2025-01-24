@@ -14,4 +14,4 @@ Route::get('/location/list', [LocationController::class, 'list']);
 Route::post('/location/add', [LocationController::class, 'add']);
 
 Route::put('/location/edit/{id}', [LocationController::class, 'edit']);
-Route::delete('/location/delete', [LocationController::class, 'delete']);
+Route::delete('/location/delete/{id}', [LocationController::class, 'delete']);

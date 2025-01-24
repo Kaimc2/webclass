@@ -17,20 +17,21 @@ class LocationController extends Controller
         ], 200);
     }
 
-    function add(Request $name) {
-        Location::create([
-            'name' => $name 
+    function add(Request $request) {
+        $location = Location::create([
+            'name' => $request->get('name')
         ]);
     
         return response()->json([
             'status'    => 'success',
             'message'   => 'Location have been created',
+            'data'      => $location
         ], 200);
     }
 
-    function edit($id, Request $data) {
+    function edit($id, Request $request) {
 
-        $validate = $data->validate([
+        $request->validate([
             'name' => 'required|string',
         ]);
     
@@ -42,7 +43,9 @@ class LocationController extends Controller
                 ], 404);
             }
     
-            $location->update($validate);
+            $location->update([
+                'name'  => $request->get('name')
+            ]);
     
             return response()->json([
                 'status' => 'success',
@@ -53,6 +56,18 @@ class LocationController extends Controller
 
     function delete($id) 
     {
-        
+        $location = Location::whereId($id)->first();
+        if(!$location) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Location not found'
+            ], 404);
+        }else{
+            $location->delete();
+            return response()->json([
+                'status'    => 'success',
+                'message'   => 'Location has been deleted'
+            ], 200);
+        }
     }
 }
