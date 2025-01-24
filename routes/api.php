@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\LocationController;
-use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +9,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get('/products', [ProductController::class, 'index']); //list
+Route::post('/products/store', [ProductController::class, 'store']); //create
+Route::put('/products/edit/{productId}', [ProductController::class, 'update']); //edit 
+Route::delete('/products/delete/{productId}', [ProductController::class, 'destroy']); //delete
 
 Route::get('/location/list', [LocationController::class, 'list']);
 Route::post('/location/add', [LocationController::class, 'add']);
